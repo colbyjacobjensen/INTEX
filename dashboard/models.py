@@ -2,13 +2,13 @@ from django.db import models
 from datetime import datetime
 # Create your models here.
 class Nutrient(models.Model):
-    nutrientName = models.CharField(max_length=30)
+    nutrient_name = models.CharField(max_length=30)
  
     class Meta:
         db_table = 'Nutrient'
  
     def __str__(self):
-        return (self.nutrientName)
+        return (self.nutrient_name)
 
 class Food(models.Model):
     food_name = models.CharField(max_length=30)
@@ -46,7 +46,6 @@ class JournalEntry(models.Model):
     datetime = models.DateField(default=datetime.today, blank=True)
     Food = models.ManyToManyField(Food, blank=True)
     #user = models.ForeignKey(User, on_delete=models.CASCADE)
- 
     class Meta:
         db_table = 'Journal Entry'
  

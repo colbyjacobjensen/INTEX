@@ -17,4 +17,4 @@ def index(request):
         'data': data,
         'form': form,
     }
-    return render(request, 'dashboard/index.html', context)
+    return render(request, 'dashboard/dashboard.html', context)
