@@ -1,20 +1,29 @@
 from django.shortcuts import render, redirect
-from .models import User
-from .forms import UserForm
+from .models import Food
+from .forms import FoodForm
  
 # Create your views here.
+
+def dashboardPageView(request) :
+    return render(request, 'dashboard/index.html')
+
+def chartsPageView(request) :
+    return render(request, 'dashboard/charts.html')
+
+def journalPageView(request) :
+    return render(request, 'dashboard/journal.html')
  
-def index(request):
-    data = User.objects.all()
+def indexPageView(request):
+    data = Food.objects.all()
     if request.method == 'POST':
-        form = UserForm(request.POST)
+        form = FoodForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('/')
     else:
-        form = UserForm()
+        form = FoodForm()
     context = {
         'data': data,
         'form': form,
     }
-    return render(request, 'dashboard/dashboard.html', context)
+    return render(request, 'dashboard/index.html', context)

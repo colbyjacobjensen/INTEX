@@ -1,7 +1,7 @@
 from django import forms
-from .models import User
+from .models import Food
  
-class UserForm(forms.ModelForm):
+class FoodForm(forms.ModelForm):
     class Meta:
-        model = User
+        model = Food
         fields = '__all__'
