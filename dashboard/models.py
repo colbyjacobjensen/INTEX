@@ -1,11 +1,15 @@
 from django.db import models
 from datetime import datetime
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 # Create your models here.
 
 # class User(AbstractUser):
 #     def __str__(self):
 #         return f'{self.username}'
+
 # class Nutrient(models.Model):
 #     nutrient_name = models.CharField(max_length=30)
  
@@ -25,27 +29,33 @@ from django.contrib.auth.models import AbstractUser
 #     def __str__(self):
 #         return (self.food_name)
 
-# # class User(models.Model):
-# #     email = models.EmailField(max_length=100)    
-# #     password = models.CharField(max_length=20)
-# #     first_name = models.CharField(max_length=30)
-# #     last_name = models.CharField(max_length=30)
-# #     gender = models.CharField(max_length=30)
-# #     height_inches = models.DecimalField(max_digits=8, decimal_places=1, default=0)
-# #     weight = models.IntegerField(default=0)
-# #     age = models.IntegerField(default=0)
-# #     stage = models.CharField(max_length=30, blank=True)
-# #     comorbidity_type = models.CharField(max_length=30, blank=True)
-
-#     # class Meta:
-#     #     db_table = 'User'
- 
-#     # def __str__(self):
-#     #     return (self.full_name)
+class Profile(models.Model):
+    gender = models.CharField(max_length=30)
+    height_inches = models.DecimalField(max_digits=8, decimal_places=1, default=0)
+    weight = models.IntegerField(default=0)
+    age = models.IntegerField(default=0)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    class Meta:
+        db_table = 'Metrics'
     
-#     # @property
-#     # def full_name(self):
-#     #     return '%s %s' % (self.first_name, self.last_name)
+    def __str__(self):
+        return f'{self.user.username} Profile'
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+# @receiver(post_save, sender=User)
+# def create_profile(sender, instance, created, **kwargs):
+#     if created:
+#         Profile.objects.create(user=instance)
+
+# @receiver(post_save, sender=User)
+# def save_profile(sender, instance, **kwargs):
+#     instance.profile.save()
+    
+    # @property
+    # def full_name(self):
+    #     return '%s %s' % (self.first_name, self.last_name)
 
 # class JournalEntry(models.Model):
 #     datetime = models.DateField(default=datetime.today, blank=True)

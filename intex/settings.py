@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'intex.wsgi.application'
 DATABASES = {
     'default': {
     'ENGINE': 'django.db.backends.postgresql',
-    'NAME': 'kidney',
+    'NAME': 'kidneys',
     'USER': 'postgres',
     'PASSWORD': '081922',
     'HOST': 'localhost'#,
@@ -87,6 +87,7 @@ DATABASES = {
     }
 }
 
+# AUTH_USER_MODEL = 'dashboard.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
