@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Food
+# from .models import Food
 
 
 # Create your forms here.
@@ -25,5 +25,5 @@ class NewUserForm(UserCreationForm):
 
 class FoodForm(forms.ModelForm):
     class Meta:
-        model = Food
+        # model = Food
         fields = '__all__'
