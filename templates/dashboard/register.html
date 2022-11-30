@@ -64,48 +64,51 @@
                                     </div> 
                                     <br><br>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="age"
+                                        <input type="text" name="age" class="form-control form-control-user" id="age"
                                             placeholder="Age">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="height_inches"
+                                        <input type="text" name="height" class="form-control form-control-user" id="height_inches"
                                             placeholder="Height (inches)">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="weight"
+                                        <input type="text" name="weight" class="form-control form-control-user" id="weight"
                                             placeholder="Weight">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="stage"
+                                        <input type="text" name="stage" class="form-control form-control-user" id="stage"
                                             placeholder="Stage">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="comorbidity_type"
+                                        <input type="text" name="comorbitity" class="form-control form-control-user" id="comorbidity_type"
                                             placeholder="Comorbidity Type">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" id="email"
-                                        placeholder="Email Address">
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <input type="username" name="username" class="form-control form-control-user" id="username"
+                                            placeholder="Username">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="email" name="email" class="form-control form-control-user" id="email"
+                                            placeholder="Email Address">
+                                    </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="password" class="form-control form-control-user"
+                                        <input type="password" name="password" class="form-control form-control-user"
                                             id="password" placeholder="Password">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="password" class="form-control form-control-user"
-                                            id="password" placeholder="Repeat Password">
+                                        <input type="password" name="confirmation" class="form-control form-control-user"
+                                            id="confirmation" placeholder="Repeat Password">
                                     </div>
                                 </div>
-                                <button type="submit"> submit button </button>
-                                <a href="{% url 'dashboard' %}" class="btn btn-primary btn-user btn-block" >
-                                    Register Account
-                                </a>
+                                <button type="submit" class="btn btn-primary btn-user btn-block"> Register Account </button>
                                 <hr>
                             </form>
                             <hr>
@@ -126,14 +129,14 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
 
 </body>
 
