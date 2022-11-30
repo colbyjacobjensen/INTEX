@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 from .forms import FoodForm
-#from .forms import RegisterUserForm
+from .forms import RegisterUserForm
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from django.db import IntegrityError
-from django.urls import reverse
 #from .models import Food
 #from .models import User
 from . import urls
@@ -37,12 +37,22 @@ def indexPageView(request):
     }
     return render(request, 'dashboard/index.html', context)
 
-# def LoginPageView(request) :
-#     return render(request, 'dashboard/login.html')
-
 def RegisterPageView(request) :
-     return render(request, 'dashboard/register.html')
-
+    if request.method == 'POST':
+        form = RegisterUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            messages.success(request, ("Registration successful!"))
+            return redirect('dashboard')
+    else:
+        form = RegisterUserForm()
+    return render(request, 'dashboard/register.html', {
+        'form':form,
+        })
 
 
 # def RegisterPageView(request):
