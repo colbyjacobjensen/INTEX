@@ -93,3 +93,8 @@ def LoginPageView(request):
     #         })
     else:
         return render(request, 'dashboard/login.html')
+
+def LogoutPageView(request):
+    logout(request)
+    messages.success(request, ("You were successfully logged out."))
+    return redirect('login')

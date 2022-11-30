@@ -5,6 +5,7 @@ from .views import chartsPageView
 from .views import journalPageView
 from .views import RegisterPageView
 from .views import LoginPageView
+from .views import LogoutPageView
 
  
 urlpatterns = [
@@ -13,5 +14,6 @@ urlpatterns = [
     path('index/', indexPageView, name='index'),
     path('dashboard/', dashboardPageView, name='dashboard'),
     path('login/', LoginPageView, name='login'),
+    path('logout/', LogoutPageView, name='logout'),
     path('', RegisterPageView, name='register'),
 ]
