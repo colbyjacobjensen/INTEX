@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'dashboard.apps.DashboardConfig',
-    'login.apps.LoginConfig',
     'crispy_forms',
 ]
 
@@ -82,14 +81,15 @@ WSGI_APPLICATION = 'intex.wsgi.application'
 DATABASES = {
     'default': {
     'ENGINE': 'django.db.backends.postgresql',
-    'NAME': 'kidney',
+    'NAME': 'kidneys',
     'USER': 'postgres',
-    'PASSWORD': 'admin',
+    'PASSWORD': '081922',
     'HOST': 'localhost'#,
     #'PORT' : '5432'
     }
 }
 
+# AUTH_USER_MODEL = 'dashboard.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
