@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Register</title>
+    <title>Kidney - Register</title>
 
     <!-- Custom fonts for this template-->
     <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
@@ -30,10 +30,27 @@
     <div class="container">
 
         <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <center><h1 class="m-0 font-weight-bold text-primary">WELCOME TO KIDNEY!</h1></center>
+                </div>
+                <div class="card-body">
+                    <h2>Our Mission</h2>
+                    <p class="mb-0">When a doctor appointment can be hard to get, we are there to help people with Chronic Kidney Disease have access to the dietary tools neccessary to prevent a worsening condition. </p>
+                    <center><img width=400px src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQH5eXOAgH20vlOYQZe1lTJn8CWFpcTCIN1Ng&usqp=CAU {% static '/img/kidneyimage1.jpeg' %}" alt="Kidney Image"></center><br>
+                    <p class="mb-0">Kidney is designed to be your personal dietary coach when your doctor can't be there. It can help you know exactly what to include in your diet to stay healthy and prevent worsening CKD symptoms.
+                        Simply create an account and input some information for us so we can calculate your personal daily recommended micronutrient, macronutrient and water amounts. 
+                    </p><br><br>
+                    <h2>Chronic Kidney Disease (CKD) - 'The Silent Killer'</h2><br>
+                    <h1>33%</h1><p>of the population is high risk for kidney disease</p><br>
+                    <h1>90%</h1><p>of kidney function can be lost before symptoms appear</p><br>
+                    <h1>50%</h1><p>might be able to prevent ESRD through diet and lifestyle changes</p><br>
+                    <h5>Please Create an Account <u>BELOW</u> to Get Started!</h5>
+                </div>
+            </div>
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
-                <div class="row">
-                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                <div class="text-center row">
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
@@ -63,6 +80,7 @@
                                     </div>
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <select class="form-control form-control-user" name="gender" id="listGender">
+                                            <option value="" disabled selected>Select your Gender</option>
                                             <option value="M" >Male</option>
                                             <option value="F">Female</option>
                                         </select>
@@ -98,7 +116,7 @@
                 </div>
             </div>
         </div>
-
+        
     </div>
 
     <!-- Bootstrap core JavaScript-->
