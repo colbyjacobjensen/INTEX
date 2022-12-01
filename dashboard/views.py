@@ -368,9 +368,9 @@ def UserMetricsPageView(request) :
             # metrics_form.save()
 
             user_data = Profile()
-            user = User()
+            user = request.user
             user_id = user.pk
-            user.save()
+            # user.save()
 
             user_data.gender = request.POST['gender']
             user_data.height_inches = request.POST['height_inches']
