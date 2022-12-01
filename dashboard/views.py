@@ -39,8 +39,8 @@ def dashboardPageView(request) :
         cholesterol = response.json()[0]['cholesterol_mg']
         carbohydrates = response.json()[0]['carbohydrates_total_g']
         sugar = response.json()[0]['sugar_g']
-        phosphorus = 600
-        calcium = 1800
+        phosphorus = 24
+        calcium = 42
 
         current_user = request.user
         user_id = current_user.id
@@ -58,7 +58,6 @@ def dashboardPageView(request) :
         carbGoalTotal = 1000
         phosphorusGoalTotal = 800
         calciumGoalTotal = 1800
-
 
         #goal variables percentage
         sodiumGoal = str(int(round(((sodium/sodiumGoalTotal) * 100),0))) + '%'
@@ -157,6 +156,8 @@ def dashboardPageView(request) :
             'fatGoalNum': fatGoalNum,
             'carbGoal': carbGoal,
             'carbGoalNum': carbGoalNum,
+            'carbGoalTotal': carbGoalTotal,
+            'carbsRemain': carbsRemain,
             'calorieGoal': calorieGoal,
             'calorieGoalNum': calorieGoalNum,
             'calorieRemain': calorieRemain,
@@ -183,7 +184,7 @@ def dashboardPageView(request) :
     return render(request, 'dashboard/index.html')
 
 @login_required
-def food_log_delete(request, food_id):
+def FoodLogDeletePageView(request, food_id):
     '''
     It allows the user to delete food items from their food log
     '''
@@ -192,14 +193,17 @@ def food_log_delete(request, food_id):
 
     if request.method == 'POST':
         food_consumed.delete()
-        return redirect('food_log')
+        return redirect('journal')
     
     
     return render(request, 'dashboard/food_log_delete.html')
 
+def deleteFoodPageView(request, food_id) :
+    data = Food.objects.get(id=food_id)
 
-def chartsPageView(request) :
-    return render(request, 'dashboard/charts.html')
+    data.delete()
+
+    return journalPageView(request)
 
 
 def journalPageView(request) :
@@ -226,7 +230,53 @@ def journalPageView(request) :
         cholesterol = response.json()[0]['cholesterol_mg']
         carbohydrates = response.json()[0]['carbohydrates_total_g']
         sugar = response.json()[0]['sugar_g']
+        phosphorus = 642
+        calcium = 1430
 
+        current_user = request.user
+        user_id = current_user.id
+        profile = Profile.objects.get(user=user_id)
+
+        sodiumGoalTotal = 1800
+        potassiumGoalTotal = 2750
+        sugarGoalTotal = 20
+        proteinGoalTotal = (profile.weight / 2.20462) * .6
+        proteinGoalTotal = 50
+        # this is just a placeholder if we can't figure it out based on weight
+        calorieGoalTotal = 2500
+        fatGoalTotal = calorieGoalTotal * .35
+        carbGoalTotal = 1000
+        phosphorusGoalTotal = 800
+        calciumGoalTotal = 1800
+
+        sodiumGoalNum = int(round(((sodium/sodiumGoalTotal) * 100),0))
+        potassiumGoalNum = int(round(((potassium/potassiumGoalTotal) * 100),0))
+        sugarGoalNum = int(round(((sugar/sugarGoalTotal) * 100),0))
+        proteinGoalNum = int(round(((protein/proteinGoalTotal) * 100),0))
+        fatGoalNum = int(round(((fatTotal/fatGoalTotal) * 100),0))
+        carbGoalNum = int(round(((carbohydrates/carbGoalTotal) * 100),0))
+        calorieGoalNum = int(round(((calories/proteinGoalTotal) * 100),0))
+        phosphorusGoalNum = int(round(((phosphorus/phosphorusGoalTotal) * 100),0))
+        calciumGoalNum = int(round(((calcium/calciumGoalTotal) * 100),0))
+
+        if potassiumGoalNum > 100:
+            messages.success(request, ("You have exceeded your potassium recommendation for the day! Limit your potassium intake for the rest of the day."))
+        if sodiumGoalNum > 100:
+            messages.success(request, ("You have exceeded your sodium recommendation for the day! Limit your sodium intake for the rest of the day."))
+        if sugarGoalNum > 100:
+            messages.success(request, ("You have exceeded your sugar recommendation for the day! Limit your sugar intake for the rest of the day."))
+        if proteinGoalNum > 100:
+            messages.success(request, ("You have exceeded your protein recommendation for the day! Limit your protein intake for the rest of the day."))
+        if fatGoalNum > 100:
+            messages.success(request, ("You have exceeded your fats recommendation for the day! Limit your fats intake for the rest of the day."))
+        if carbGoalNum > 100:
+            messages.success(request, ("You have exceeded your carbohydrate recommendation for the day! Limit your carbohydrate intake for the rest of the day."))
+        if calorieGoalNum > 100:
+            messages.success(request, ("You have exceeded your calorie recommendation for the day! Limit your calorie intake for the rest of the day."))
+        if phosphorusGoalNum > 100:
+            messages.success(request, ("You have exceeded your phosphorus recommendation for the day! Limit your phosphorus intake for the rest of the day."))
+        if calciumGoalNum > 100:
+            messages.success(request, ("You have exceeded your calcium recommendation for the day! Limit your calcium intake for the rest of the day."))
 
         if not Food.objects.filter(foodName=foodName).exists():
 
@@ -271,46 +321,6 @@ def journalPageView(request) :
     })
 
 
-
-    # if request.method == "POST" :
-        
-    #     # query = input('Choose Food:\n')
-    #     query = request.POST['food']
-    #     api_url = 'https://api.api-ninjas.com/v1/nutrition?query={}'.format(query)
-    #     response = requests.get(api_url, headers={'X-Api-Key': 'j3WdpWFz3JI0zTDkkXXw8A==Y9P0i5ktjOjmlcOS'})
-
-    #     foodName = response.json()[0]['name']
-    #     calories = response.json()[0]['calories']
-    #     fatTotal = response.json()[0]['fat_total_g']
-    #     satFat = response.json()[0]['fat_saturated_g']
-    #     protein = response.json()[0]['protein_g']
-    #     sodium = response.json()[0]['sodium_mg']
-    #     potassium = response.json()[0]['potassium_mg']
-    #     cholesterol = response.json()[0]['cholesterol_mg']
-    #     carbohydrates = response.json()[0]['carbohydrates_total_g']
-    #     sugar = response.json()[0]['sugar_g']
-
-    #     food_info = [
-    #         'Food Name: ' + foodName.capitalize(), 
-    #         'Calories: ' + str(calories), 
-    #         'FatTotal: '+ str(fatTotal),
-    #         'SatFat: ' + str(satFat),
-    #         'Protein: '+ str(protein),
-    #         'Sodium: '+ str(sodium),
-    #         'Potassium: '+ str(potassium),
-    #         'Cholesterol: '+ str(cholesterol),
-    #         'Carbohydrates: '+ str(carbohydrates),
-    #         'Sugar: '+ str(sugar) 
-    #     ]
-    #     context = {
-    #         'library':food_info
-    #     }
-    #     if response.status_code == requests.codes.ok:
-    #         return render(request, 'dashboard/journal.html', context)
-    #     else:
-    #         return ("Error:", response.status_code, response.text)
-    
-    # return render(request, 'dashboard/journal.html')
  
 
 def indexPageView(request):
@@ -452,3 +462,96 @@ def LogoutPageView(request):
     logout(request)
     messages.success(request, ("You were successfully logged out."))
     return redirect('login')
+
+@login_required
+def ProfilePageView(request):
+    '''
+    It allows the user to edit their metrics
+    '''
+
+    if request.method == 'POST':
+
+        user = request.user
+        user_profile = Profile.objects.get(user=user)
+
+        # get the values from the form
+        user_profile.gender = request.POST['gender']
+        user_profile.height_inches = request.POST['height']
+        user_profile.weight = request.POST['weight']
+        user_profile.age = request.POST['age']
+
+        user_profile.save()
+        # messages.success(request, ("Registration successful!"))
+        
+        return redirect('profile')
+        
+     # get the currently logged in user
+    user = request.user
+
+    # get the food item selected by the user
+    user_profile = Profile.objects.get(user=user)
+    gender = user_profile.gender
+    height = user_profile.height_inches
+    weight = user_profile.weight
+    age = user_profile.age
+
+
+
+
+    # get the currently logged in user
+    # profile = Profile.objects.all()
+
+    
+        
+    # get the food log of the logged in user
+    # user_food_log = FoodLog.objects.filter(user=request.user)
+
+    
+    context = {
+        'gender': gender,
+        'height': height,
+        'weight': weight,
+        'age': age
+    }
+
+        # add the data to the weight log
+        # weight_log = Weight(user=user, weight=weight, entry_date=entry_date)
+        # weight_log.save()
+
+    # get the weight log of the logged in user
+    # user_weight_log = Weight.objects.filter(user=request.user)
+    
+    return render(request, 'dashboard/profile.html', context
+    # {
+    #     'categories': FoodCategory.objects.all(),
+    #     'user_weight_log': user_weight_log
+    # }
+    )
+
+@login_required
+def foodAddPageView(request):
+    '''
+    It allows the user to add a new food item
+    '''
+    if request.method == 'POST':
+        food_form = FoodForm(request.POST, request.FILES)
+
+        if food_form.is_valid():
+            new_food = food_form.save(commit=False)
+            new_food.save()
+
+            messages.success(request, ("The new food item added successfully."))
+
+            return render(request, 'dashboard/food_add.html', {
+                'food_form': FoodForm(),
+            })
+        
+        else:
+            return render(request, 'dashboard/food_add.html', {
+                'food_form': FoodForm(),
+            })
+
+    else:
+        return render(request, 'dashboard/food_add.html', {
+            'food_form': FoodForm(),
+        })

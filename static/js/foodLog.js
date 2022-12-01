@@ -1,5 +1,5 @@
 var table  = document.getElementById('foodtable');
-var calories = 0, fat = 0, carbohydrates = 0, protein = 0;
+var calories = 0, fat = 0, carbohydrates = 0, protein = 0 ;
 
 for(var i = 1; i <table.rows.length - 1; i++) {
     calories += parseFloat(table.rows[i].cells[1].innerHTML);
@@ -48,13 +48,15 @@ var myPieChart = new Chart(ctx, {
         [
             {
                 data: [fatPercentage, carbohydratesPercentage, proteinPercentage],
-                backgroundColor: ['#e5a641', '#55b560', '#419ad6'],
+                backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
+                hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
             }
         ],
     },
     options: {
         responsive: true,
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
         animation: {
             animateScale: true,
         },
@@ -83,6 +85,24 @@ var myPieChart = new Chart(ctx, {
     },
 });
 
+
+// options: {
+//     maintainAspectRatio: false,
+//     tooltips: {
+//       backgroundColor: "rgb(255,255,255)",
+//       bodyFontColor: "#858796",
+//       borderColor: '#dddfeb',
+//       borderWidth: 1,
+//       xPadding: 15,
+//       yPadding: 15,
+//       displayColors: false,
+//       caretPadding: 10,
+//     },
+//     legend: {
+//       display: false
+//     },
+//     cutoutPercentage: 80,
+//   },
 
 
 // Calorie Goal Progress Bar

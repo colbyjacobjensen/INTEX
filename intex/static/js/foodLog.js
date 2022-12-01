@@ -1,5 +1,5 @@
 var table  = document.getElementById('foodtable');
-var calories = 0, fat = 0, carbohydrates = 0, protein = 0;
+var calories = 0, fat = 0, carbohydrates = 0, protein = 0 ;
 
 for(var i = 1; i <table.rows.length - 1; i++) {
     calories += parseFloat(table.rows[i].cells[1].innerHTML);

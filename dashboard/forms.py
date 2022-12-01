@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Profile
-# from .models import Food
+from .models import Food
 
 
 # Create your forms here.
@@ -83,6 +83,23 @@ class UserMetricsForm(forms.ModelForm):
     #     return user
 
 class FoodForm(forms.ModelForm):
-    class Meta:
-        # model = Food
-        fields = '__all__'
+	
+	foodName = forms.CharField(max_length = 50, widget=forms.TextInput(attrs={'class':'form-control form-control-user'}))
+	calories = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control form-control-user'}))
+	fatTotal = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control form-control-user'}))
+	satFat = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control form-control-user'}))
+	protein = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control form-control-user'}))
+	sodium = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control form-control-user'}))
+	potassium = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control form-control-user'}))
+	cholesterol = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control form-control-user'}))
+	carbohydrates = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control form-control-user'}))
+	sugar = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control form-control-user'}))
+	class Meta:
+		model = Food
+		fields = ['foodName', 'calories', 'fatTotal', 'satFat', 'protein', 'sodium', 'potassium', 
+		'cholesterol', 'carbohydrates', 'sugar']
+		
+	def __init__(self, *args, **kwargs):
+		super(FoodForm, self).__init__(*args, **kwargs)
+		for visible in self.visible_fields():
+			visible.field.widget.attrs['class'] = 'form-control'

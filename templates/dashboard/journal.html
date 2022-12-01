@@ -1,14 +1,25 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<h1>Journal</h1>
-<!-- EXPERIMENT -->
 
-<!-- EXPERIMENT END -->
 
 <div class='py-4 mt-auto'>
     <div class='container-fluid px-4'>
-
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">{{ user.username }}'s Food Journal</h1>
+            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                    class="fas fa-download fa-sm text-white-50"></i>{{ record }} Generate Report</a>
+        </div>
+        {% if messages %}
+            {% for message in messages %} 
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+            {% endfor %} 
+        {% endif %}
         <div class='row justify-content-center'>
             <div class='col-xl-12'>
                 
@@ -89,6 +100,9 @@
                                                 <td class='col-md-2'>{{ food_item.food_consumed.carbohydrates }}</td>
                                                 <td class='col-md-2'>{{ food_item.food_consumed.protein }}</td>
                                                 <td>
+                                                    <a class='btn btn-danger' href="{% url 'food_log_delete' food_item.id %}">
+                                                        <i>Delete</i>
+                                                    </a>                                                
                                                 </td>
                                             </tr>
                                         {% endfor %}
@@ -98,7 +112,7 @@
                                                 <td id='totalFat' class='col-md-2'><b></b></td>
                                                 <td id='totalCarbohydrates' class='col-md-2'><b></b></td>
                                                 <td id='totalProtein' class='col-md-2'><b></b></td>
-                                                <td></td>     
+                                                
                                             </tr>
                                         </tbody>
                                     </table>
@@ -112,7 +126,7 @@
 
                             <div class='card shadow mb-4'>
                                 <div class='card-header py-3'>
-                                    <h5>Daily Calorie Goal - <strong class='text-primary'>2,000 calories</strong></h5>
+                                    <h5>Daily Calorie Goal - <strong class='text-primary' id="calGoal" value="2000">2,000 calories</strong></h5>
                                 </div>
                                 <div class='card-body justify-content-center'>
 
