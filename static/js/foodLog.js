@@ -107,7 +107,7 @@ var myPieChart = new Chart(ctx, {
 
 // Calorie Goal Progress Bar
 
-var caloriePercentage = (calories / 2000) *  100;
+var caloriePercentage = round(((calories / 2000) *  100),2);
 //document.getElementById('progressBar').setAttribute('style', 'width:' + caloriePercentage + '%');
 
 $('.progress-bar').animate({
