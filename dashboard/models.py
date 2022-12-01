@@ -6,6 +6,36 @@ from django.dispatch import receiver
 
 # Create your models here.
 
+class Food(models.Model):
+    foodName = models.CharField(max_length=200)
+    calories = models.IntegerField(default=0)
+    fatTotal = models.DecimalField(max_digits=7, decimal_places=2)
+    satFat = models.DecimalField(max_digits=7, decimal_places=2)
+    protein = models.DecimalField(max_digits=7, decimal_places=2)
+    sodium = models.DecimalField(max_digits=7, decimal_places=2)
+    potassium = models.DecimalField(max_digits=7, decimal_places=2)
+    cholesterol = models.DecimalField(max_digits=7, decimal_places=2)
+    carbohydrates = models.DecimalField(max_digits=7, decimal_places=2)
+    sugar = models.DecimalField(max_digits=7, decimal_places=2)
+
+    class Meta:
+        db_table = 'Food'
+
+
+    def __str__(self):
+        return (self.foodName)
+
+class FoodLog(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    food_consumed = models.ForeignKey(Food, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Food Log'
+        verbose_name_plural = 'Food Log'
+
+    def __str__(self):
+        return f'{self.user.username} - {self.food_consumed.foodName}'
+
 # class User(AbstractUser):
 #     def __str__(self):
 #         return f'{self.username}'
