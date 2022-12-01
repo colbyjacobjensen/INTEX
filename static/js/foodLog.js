@@ -35,7 +35,7 @@ Chart.defaults.global.defaultFontFamily = 'system-ui, -apple-system, "Segoe UI",
 Chart.defaults.global.defaultFontColor = '#858796';
 
 // Doughnut Chart - Macronutrients breakdown
-var ctx = document.getElementById('myPieChart');
+var ctx = document.getElementById('myPieChart2');
 var myPieChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
