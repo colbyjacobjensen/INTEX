@@ -43,9 +43,12 @@ def dashboardPageView(request) :
         sodiumGoal = str(int(round(((sodium/200) * 100),0))) + '%'
         potassiumGoal = str(int(round(((potassium/200) * 100),0))) + '%'
 
-        if potassiumGoal > 100:
+        sodiumGoalNum = int(round(((sodium/200) * 100),0))
+        potassiumGoalNum = int(round(((potassium/200) * 100),0))
+
+        if potassiumGoalNum > 100:
             messages.success(request, ("This food has too much potassium! Limit your potassium intake for the rest of the day."))
-        if sodiumGoal > 100:
+        if sodiumGoalNum > 100:
             messages.success(request, ("This food has too much sodium! Limit your sodium intake for the rest of the day."))
 
         food_info = [
@@ -74,7 +77,9 @@ def dashboardPageView(request) :
             'sugar': sugar,
             'library':food_info,
             'sodiumGoal': sodiumGoal,
-            'potassiumGoal': potassiumGoal
+            'potassiumGoal': potassiumGoal,
+            'sodiumGoalNum': sodiumGoalNum,
+            'potassiumGoalNum': potassiumGoalNum
         }
         if response.status_code == requests.codes.ok:
             return render(request, 'dashboard/index.html', context)
@@ -83,7 +88,54 @@ def dashboardPageView(request) :
 
     return render(request, 'dashboard/index.html')
 
+# @login_required
+# def food_log_view(request):
+#     '''
+#     It allows the user to select food items and 
+#     add them to their food log
+#     '''
+#     if request.method == 'POST':
+#         foods = Food.objects.all()
 
+#         # get the food item selected by the user
+#         food = request.POST['food_consumed']
+#         food_consumed = Food.objects.get(food_name=food)
+
+#         # get the currently logged in user
+#         user = request.user
+        
+#         # add selected food to the food log
+#         food_log = FoodLog(user=user, food_consumed=food_consumed)
+#         food_log.save()
+
+#     else: # GET method
+#         foods = Food.objects.all()
+        
+#     # get the food log of the logged in user
+#     user_food_log = FoodLog.objects.filter(user=request.user)
+    
+#     return render(request, 'food_log.html', {
+#         'categories': FoodCategory.objects.all(),
+#         'foods': foods,
+#         'user_food_log': user_food_log
+#     })
+
+
+# @login_required
+# def food_log_delete(request, food_id):
+#     '''
+#     It allows the user to delete food items from their food log
+#     '''
+#     # get the food log of the logged in user
+#     food_consumed = FoodLog.objects.filter(id=food_id)
+
+#     if request.method == 'POST':
+#         food_consumed.delete()
+#         return redirect('food_log')
+    
+#     return render(request, 'food_log_delete.html', {
+#         'categories': FoodCategory.objects.all()
+#     })
 
 
 def chartsPageView(request) :
