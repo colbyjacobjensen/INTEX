@@ -338,11 +338,36 @@ def journalPageView(request) :
     
     # query accessing
     total_sodium_query = FoodLog.objects.aggregate(sodium_sum=Sum('food_consumed__sodium'))
-
     total_potassium_query = FoodLog.objects.aggregate(potassium_sum=Sum('food_consumed__potassium'))
 
-    sodiumPercent = int(round(((total_sodium_query['sodium_sum']/sodiumGoalTotal) * 100),0))
-    potassiumPercent = int(round(((total_potassium_query['potassium_sum']/potassiumGoalTotal) * 100),0))
+    if (total_sodium_query['sodium_sum'] == None) and (total_potassium_query['potassium_sum'] == None):
+        sodiumPercent = 0
+        potassiumPercent = 0
+        messages.success(request, ("Add food to your food log to see your daily nutrient totals!"))
+    else:
+        sodiumPercent = int(round(((total_sodium_query['sodium_sum']/sodiumGoalTotal) * 100),0))
+        potassiumPercent = int(round(((total_potassium_query['potassium_sum']/potassiumGoalTotal) * 100),0))
+
+        if total_sodium_query['sodium_sum'] > sodiumGoalTotal:
+            sodiumExceed = total_sodium_query['sodium_sum'] - sodiumGoalTotal
+            messages.success(request, ("You have exceeded your sodium recommendation for the day by " + str(sodiumExceed) + ". Limit your sodium intake for the rest of the day."))
+
+            items = list(Food.objects.filter(sodium__lt = (sodiumGoalTotal / 25)))
+            random_sodium = random.sample(items, 3)
+            messages.success(request, ("We recommend trying some of the following foods with less sodium, such as " + str(random_sodium[0]) + ", " + str(random_sodium[1]) + " or " + str(random_sodium[2])))
+    
+        if total_potassium_query['potassium_sum'] > potassiumGoalTotal:
+            potassiumExceed = total_potassium_query['potassium_sum'] - potassiumGoalTotal
+            messages.success(request, ("You have exceeded your potassium recommendation for the day by " + str(potassiumExceed) + ". Limit your potassium intake for the rest of the day."))
+            
+            items = list(Food.objects.filter(potassium__lt = (potassiumGoalTotal / 25)))
+            random_potassium = random.sample(items, 3)
+            messages.success(request, ("We recommend trying some of the following foods with less potassium, such as " + str(random_potassium[0]) + ", " + str(random_potassium[1]) + " or " + str(random_potassium[2])))
+    
+
+
+    # sodiumPercent = int(round(((total_sodium_query['sodium_sum']/sodiumGoalTotal) * 100),0))
+    # potassiumPercent = int(round(((total_potassium_query['potassium_sum']/potassiumGoalTotal) * 100),0))
     calciumPercent = 34
     phosphorusPercent = 12
 
@@ -351,22 +376,6 @@ def journalPageView(request) :
 
     # log = user_food_log.all(food_consumed)
 
-    if total_sodium_query['sodium_sum'] > sodiumGoalTotal:
-        sodiumExceed = total_sodium_query['sodium_sum'] - sodiumGoalTotal
-        messages.success(request, ("You have exceeded your sodium recommendation for the day by " + str(sodiumExceed) + ". Limit your sodium intake for the rest of the day."))
-
-        items = list(Food.objects.filter(sodium__lt = (sodiumGoalTotal / 25)))
-        random_sodium = random.sample(items, 3)
-        messages.success(request, ("We recommend trying some of the following foods with less sodium, such as " + str(random_sodium[0]) + ", " + str(random_sodium[1]) + " or " + str(random_sodium[2])))
-   
-    if total_potassium_query['potassium_sum'] > potassiumGoalTotal:
-        potassiumExceed = total_potassium_query['potassium_sum'] - potassiumGoalTotal
-        messages.success(request, ("You have exceeded your potassium recommendation for the day by " + str(potassiumExceed) + ". Limit your potassium intake for the rest of the day."))
-        
-        items = list(Food.objects.filter(potassium__lt = (potassiumGoalTotal / 25)))
-        random_potassium = random.sample(items, 3)
-        messages.success(request, ("We recommend trying some of the following foods with less potassium, such as " + str(random_potassium[0]) + ", " + str(random_potassium[1]) + " or " + str(random_potassium[2])))
-    
 
     context = {
         'foods': foods,
@@ -407,7 +416,6 @@ def RegisterPageView(request) :
             password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password)
             login(request, user)
-            messages.success(request, ("Registration successful!"))
 
             return redirect('metrics')
     else:
