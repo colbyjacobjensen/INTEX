@@ -4,6 +4,9 @@ Josh Blad
 Cade Loar
 Colby Jensen
 Braden Ritchie
+
+The purpose of this project is to provide Chronic Kidney Disease victims
+with a helpful platform that allows them to track their nutrient intake.
 """
 
 

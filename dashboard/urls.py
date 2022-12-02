@@ -1,5 +1,7 @@
 from django.urls import path
-from .views import ProfilePageView, profileEditPageView, showSingleProfilePageView
+from .views import ProfilePageView
+from .views import profileEditPageView
+from .views import showSingleProfilePageView
 from .views import dashboardPageView
 from .views import indexPageView
 from .views import journalPageView
