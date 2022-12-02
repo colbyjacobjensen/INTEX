@@ -229,6 +229,7 @@ def journalPageView(request) :
     potassiumGoalTotal = 2750
     phosphorusGoalTotal = 800
     calciumGoalTotal = 1800
+    calorieGoalTotal = 2500
 
     '''
     It allows the user to select food items and 
@@ -373,7 +374,8 @@ def journalPageView(request) :
         'calciumPercent': calciumPercent,
         'potassiumPercent': potassiumPercent,
         'phosphorusPercent': phosphorusPercent,
-        'sodiumPercent': sodiumPercent
+        'sodiumPercent': sodiumPercent,
+        'calorieGoalTotal': calorieGoalTotal
     }
     return render(request, 'dashboard/journal.html', context)
 
@@ -382,6 +384,7 @@ def journalPageView(request) :
 
 def indexPageView(request):
     # data = Food.objects.all()
+    user=request.user
     if request.method == 'POST':
         form = FoodForm(request.POST)
         if form.is_valid():
@@ -390,8 +393,8 @@ def indexPageView(request):
     else:
         form = FoodForm()
     context = {
-        # 'data': data,
-        'form': form,
+        'user': user,
+        'form': form
     }
     return render(request, 'dashboard/index.html', context)
 
