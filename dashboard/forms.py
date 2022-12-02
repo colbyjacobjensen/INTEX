@@ -48,8 +48,6 @@ class UserMetricsForm(forms.ModelForm):
 		model = Profile
 		fields = ("gender", "height_inches", "weight", "age")
 
-
-
 # class UserUpdateForm(forms.ModelForm):
 #     email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control form-control-user'}))
 

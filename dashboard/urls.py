@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ProfilePageView
+from .views import ProfilePageView, profileEditPageView, showSingleProfilePageView
 from .views import dashboardPageView
 from .views import indexPageView
 from .views import journalPageView
@@ -18,8 +18,9 @@ urlpatterns = [
     path('logout/', LogoutPageView, name='logout'),
     path('metrics/', UserMetricsPageView, name='metrics'),
     path('profile/', ProfilePageView, name='profile'),
+    path("showProfile/", showSingleProfilePageView, name="profile_edit"),
+    path('edit_profile/', profileEditPageView, name='edit_profile'),
     path('food_add', foodAddPageView, name='food_add'),
-    # path("deleteFood/<int:food_id>/", deleteFoodPageView, name="deleteFood"),
     path('food_log_delete/<int:food_id>/', FoodLogDeletePageView, name='food_log_delete'),
     path('', RegisterPageView, name='register'),
 ]

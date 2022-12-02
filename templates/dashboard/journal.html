@@ -7,8 +7,6 @@
     <div class='container-fluid px-4'>
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">{{ user.username }}'s Food Journal</h1>
-            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                    class="fas fa-download fa-sm text-white-50"></i>{{ record }} Generate Report</a>
         </div>
         {% if messages %}
             {% for message in messages %} 
@@ -71,6 +69,19 @@
 
                                 </div>
                             </div>
+                        <!-- <script>
+                            $(document).ready(function()
+                            {
+                                var sodium;
+                                var totalsodium=0;
+                                $('td:nth-child(7)').each(function()
+                                {
+                                    sodium=$(this).html();
+                                    totalsodium+=parseInt(sodium);
+                                    $('#totalsodium').text(totalsodium);
+                                });
+                            });
+                        </script> -->
 
                             <div class="card shadow mb-4">
 
@@ -85,9 +96,13 @@
                                             <tr>
                                                 <th scope='col' class='col-md-2'>Food Item</th>
                                                 <th scope='col' class='col-md-2'>Calories</th>
-                                                <th scope='col' class='col-md-2'>Fat (g) in 100g</th>
-                                                <th scope='col' class='col-md-2'>Carbs (g) in 100g</th>
+                                                <th scope='col' class='col-md-2'hidden>Fat (g) in 100g</th>
+                                                <th scope='col' class='col-md-2'hidden>Carbs (g) in 100g</th>
                                                 <th scope='col' class='col-md-2'>Protein (g) in 100g</th>
+                                                <!-- <th scope='col' class='col-md-2'>Calcium</th> -->
+                                                <th scope='col' class='col-md-2'>Potassium</th>
+                                                <!-- <th scope='col' class='col-md-2'>Phosphorus</th> -->
+                                                <th scope='col' class='col-md-2'>Sodium </th>
                                                 <th scope='col' class='col-md-2'></th>
                                             </tr>
                                         </thead>
@@ -96,9 +111,13 @@
                                             <tr>
                                                 <td class='col-md-2'>{{ food_item.food_consumed.foodName }}</td>
                                                 <td class='col-md-2'>{{ food_item.food_consumed.calories }}</td>
-                                                <td class='col-md-2'>{{ food_item.food_consumed.fatTotal }}</td>
-                                                <td class='col-md-2'>{{ food_item.food_consumed.carbohydrates }}</td>
+                                                <td class='col-md-2' hidden>{{ food_item.food_consumed.fatTotal }}</td>
+                                                <td class='col-md-2' hidden>{{ food_item.food_consumed.carbohydrates }}</td> 
                                                 <td class='col-md-2'>{{ food_item.food_consumed.protein }}</td>
+                                                <!-- <td class='col-md-2'>{{ food_item.food_consumed.calcium }}</td> -->
+                                                <td class='col-md-2'>{{ food_item.food_consumed.potassium }}</td>
+                                                <!-- <td class='col-md-2'>{{ food_item.food_consumed.phosphorus }}</td> -->
+                                                <td class='col-md-2'>{{ food_item.food_consumed.sodium }}</td>
                                                 <td>
                                                     <a class='btn btn-danger' href="{% url 'food_log_delete' food_item.id %}">
                                                         <i>Delete</i>
@@ -109,10 +128,12 @@
                                             <tr>
                                                 <td id='foodName' class='col-md-2'><b>Total</b></td>
                                                 <td id='totalCalories' class='col-md-2'><b></b></td>
-                                                <td id='totalFat' class='col-md-2'><b></b></td>
-                                                <td id='totalCarbohydrates' class='col-md-2'><b></b></td>
+                                                <td id='totalFat' class='col-md-2' hidden><b></b></td>
+                                                <td id='totalCarbohydrates' class='col-md-2' hidden><b></b></td>
                                                 <td id='totalProtein' class='col-md-2'><b></b></td>
-                                                
+                                                <td id='totalPotassium' class='col-md-2'><b></b></td>
+                                                <td id='totalSodium' class='col-md-2'><b></b></td>
+
                                             </tr>
                                         </tbody>
                                     </table>
@@ -155,43 +176,38 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <br>
                             <div class='card shadow mb-4"'>
                                 <div class='card-header'>
-                                    <h5>Macronutrients Breakdown</h5>
+                                    <h5>Micronutrients Breakdown</h5>
                                 </div>
-                                <div class='card-body justify-content-center'>
-                                    !-- Project Card Example -->
-                                    <div class="card shadow mb-4">
-                                        <div class="card-header py-3">
-                                            <h6 class="m-0 font-weight-bold text-primary">Micronutrients</h6>
-                                        </div>
+                                <div class='card-body justify-content-center'>                                    
                                         <div class="card-body">
                                             <h4 class="small font-weight-bold">Calcium <span
-                                                    class="float-right">{{ calciumGoal }}</span></h4>
+                                                    class="float-right">{{ calciumPercent }}%</span></h4>
                                             <div class="progress mb-4">
-                                                <div class="progress-bar bg-danger" role="progressbar" style="width: {{ calciumGoalNum }}%"
+                                                <div class="progress-bar bg-danger" role="progressbar" style="width: {{ calciumPercent }}%"
                                                     aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
                                                 </div>
                                             </div>
                                             <h4 class="small font-weight-bold">Potassium <span
-                                                    class="float-right">{{ potassiumGoal }}</span></h4>
+                                                    class="float-right">{{ potassiumPercent }}%</span></h4>
                                             <div class="progress mb-4">
-                                                <div class="progress-bar bg-warning" role="progressbar" style="width: {{ potassiumGoalNum }}%"
+                                                <div class="progress-bar bg-warning" role="progressbar" style="width: {{ potassiumPercent }}%"
                                                     aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
                                                 </div>
                                             </div>
                                             <h4 class="small font-weight-bold">Phosphorus <span
-                                                    class="float-right">{{phosphorusGoal}}</span></h4>
+                                                    class="float-right">{{ phosphorusPercent }}%</span></h4>
                                             <div class="progress mb-4">
-                                                <div class="progress-bar" role="progressbar" style="width: {{phosphorusGoalNum}}%"
+                                                <div class="progress-bar" role="progressbar" style="width: {{phosphorusPercent}}%"
                                                     aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
                                                 </div>
                                             </div>
                                             <h4 class="small font-weight-bold">Sodium <span
-                                                    class="float-right">{{ sodiumGoal }}</span></h4>
+                                                    class="float-right">{{ sodiumPercent }}%</span></h4>
                                             <div class="progress mb-4">
-                                                <div class="progress-bar bg-info" role="progressbar" style="width: {{ sodiumGoalNum }}%"
+                                                <div class="progress-bar bg-info" role="progressbar" style="width: {{ sodiumPercent }}%"
                                                     aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                                                 </div>
                                             </div>

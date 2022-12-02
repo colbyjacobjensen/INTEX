@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class='py-4 mt-auto'>
+    <div class='container-fluid px-4'>
+
+        <div class='row justify-content-center'>
+            <div class='col-xl-12'>
+                
+                    <div class='row'>
+                        <div class='col-md-6 mt-4'>
+
+                            <div class='card shadow mb-4'>
+                                <div class='card-header py-3'>
+                                    <h4>Hi, <strong>{{ user.username }}</strong>!</h4>
+                                </div>
+                                <div class='card-body'>
+
+                                    <div class='d-flex w-100 justify-content-between'>
+                                        <p class='mb-1'>
+                                            Username: <strong>{{ user.username }}</strong>
+                                        </p>
+                                    </div>
+
+                                    <div class='d-flex w-100 justify-content-between'>
+                                        <p class='mb-1'>
+                                            Email: <strong>{{ user.email }}</strong>
+                                        </p>
+                                    </div>
+
+                                    <div class='d-flex w-100 justify-content-between'>
+                                        <p class='mb-1'>
+                                            First Name: <strong>{{ user.first_name }}</strong>
+                                        </p>
+                                    </div>
+
+                                    <div class='d-flex w-100 justify-content-between'>
+                                        <p class='mb-1'>
+                                            Last Name: <strong>{{ user.last_name }}</strong>
+                                        </p>
+                                    </div>
+
+                                    <div class='d-flex w-100 justify-content-between'>
+                                        <p class='mb-1'>
+                                            Date joined: <strong>{{ user.date_joined }}</strong>
+                                        </p>
+                                    </div>
+
+                                    <div class='d-flex w-100 justify-content-between'>
+                                        <p class='mb-1'>
+                                            Last login: <strong>{{ user.last_login }}</strong>
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            
+                        
+                            
+                        </div>
+                        
+                        <div class='col-md-6 mt-4'>
+                            <div class='card shadow mb-4'>
+                                <div class='card-header py-3'>
+                                    <h4>User Metrics
+                                        <span class="float-right">
+                                            <a class="btn btn-primary" href="{% url 'profile' %}">Cancel</a>
+                                        </span>
+                                    </h4>
+                                </div>
+                                <div class='card-body justify-content-center'>
+                                    
+                                        <form name="form" method="POST" action="{% url 'edit_profile' %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" id="profile_id" class='form-control form-control-user' name="profile_id" value="{{profile.id}}">
+
+                                            <label for='gender'>Gender:</label>
+                                            <input type="text" name="gender" id="gender" class='form-control form-control-user' value="{{profile.gender}}" autofocus>
+                                            <br>
+
+                                            <label for='height'>Height:</label>
+                                            <input type="text" name="height" id="height" class='form-control form-control-user' value="{{profile.height_inches}}">
+                                            <br>
+
+                                            <label for='weight'>Weight:</label>
+                                            <input type="text" name="weight" id="weight" class='form-control form-control-user' value="{{profile.weight}}">
+                                            <br>
+
+                                            <label for='age'>Age:</label>
+                                            <input type="text" name="age" id="age" class='form-control form-control-user' value="{{profile.age}}">
+                                            <br>
+
+                                            <button type="submit"class='btn btn-success btn-block'>Update Metrics</button>
+                                        </form>
+
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+            </div>
+        </div>
+
+    </div>
+</div>    
+
+
+{% endblock %}

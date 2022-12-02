@@ -65,11 +65,12 @@
                                 <div class='card-header py-3'>
                                     <h4>User Metrics
                                         <span class="float-right">
-                                            <a class="btn btn-primary" onclick='editable()'>Edit</a>
+                                            <a class="btn btn-primary" href=" {% url 'profile_edit' %} ">Edit</a> 
+                                            <!--onclick='editable()-->
                                         </span>
                                     </h4>
                                 </div>
-                                <div class='card-body justify-content-center' id='gender'>
+                                <div class='card-body justify-content-center'>
                                     <div class='d-flex w-100 justify-content-between'>
                                         <p class='mb-1'>
                                             Gender: <strong>{{ gender }}</strong>
@@ -109,6 +110,8 @@
                                     </div>-->
                                     
                                 </div>
+                                <div id='gender'>
+                                </div>
                             </div>
                         </div>
                         
@@ -131,13 +134,13 @@
             `   <div class='form-group'
                     <form method='POST'>
                         {% csrf_token %}
-                        <p class='mb-1'>Gender: <input class='form-control' type='text' name='gender' id='gender' value='{{ gender }}'></p>
+                        <p class='mb-1'>Gender: <input class='form-control' type='text' name='gender' id='gender' placeholder='{{ gender }}'></p>
                         <br>
-                        <p class='mb-1'>Height: <input class='form-control' type='text' name='height' id='height' value='{{ height }}'></p>
+                        <p class='mb-1'>Height: <input class='form-control' type='text' name='height' id='height' placeholder='{{ height }}'></p>
                         <br>
-                        <p class='mb-1'>Weight: <input class='form-control' type='text' name='weight' id='weight' value='{{ weight }}'></p>
+                        <p class='mb-1'>Weight: <input class='form-control' type='text' name='weight' id='weight' placeholder='{{ weight }}'></p>
                         <br>
-                        <p class='mb-1'>Age: <input class='form-control' type='text' name='age' id='age' value='{{ age }}'></p>
+                        <p class='mb-1'>Age: <input class='form-control' type='text' name='age' id='age' placeholder='{{ age }}'></p>
                         <br>
                         <button class='btn btn-primary float-right' type='submit' onclick=view()>Save</button>
 
