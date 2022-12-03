@@ -364,8 +364,8 @@ def journalPageView(request) :
     user_food_log = FoodLog.objects.filter(user=request.user)
     
     # query returning the sum of sodium and potassium
-    total_sodium_query = FoodLog.objects.aggregate(sodium_sum=Sum('food_consumed__sodium'))
-    total_potassium_query = FoodLog.objects.aggregate(potassium_sum=Sum('food_consumed__potassium'))
+    total_sodium_query = user_food_log.aggregate(sodium_sum=Sum('food_consumed__sodium'))
+    total_potassium_query = user_food_log.aggregate(potassium_sum=Sum('food_consumed__potassium'))
 
     #checks if logged in user is a new user
     if (total_sodium_query['sodium_sum'] == None) and (total_potassium_query['potassium_sum'] == None):
